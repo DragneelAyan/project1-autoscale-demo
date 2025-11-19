@@ -8,6 +8,24 @@ spec:
     name: autoscale-demo
   minReplicaCount: 1
   maxReplicaCount: 10
+
+  # THIS IS WHAT MAKES KEDA GENERATE AN HPA
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 0
+          policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 15
+        scaleDown:
+          stabilizationWindowSeconds: 0
+          policies:
+          - type: Percent
+            value: 100
+            periodSeconds: 15
+
   triggers:
   - type: prometheus
     metadata:
