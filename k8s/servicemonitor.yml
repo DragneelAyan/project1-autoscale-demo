@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: autoscale-demo-sm
+  namespace: project1-autoscale-demo
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: autoscale-demo
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autoscale-demo
+  namespace: project1-autoscale-demo
+  labels:
+    app: autoscale-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: autoscale-demo
+  template:
+    metadata:
+      labels:
+        app: autoscale-demo
+    spec:
+      containers:
+      - name: web
+        image: autoscale-demo:latest
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "500Mi"
+        ports:
+        - containerPort: 5000
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10

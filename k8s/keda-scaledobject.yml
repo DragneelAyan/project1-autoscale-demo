@@ -1,0 +1,17 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: autoscale-demo-keda
+  namespace: project1-autoscale-demo
+spec:
+  scaleTargetRef:
+    name: autoscale-demo
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: "REPLACE_PROM_URL"
+      metricName: fake_queue_length
+      threshold: "10"
+      query: avg_over_time(fake_queue_length[1m])
