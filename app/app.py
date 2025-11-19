@@ -1,3 +1,9 @@
+from flask import Flask, request
+import time
+from prometheus_client import Counter, Gauge, make_wsgi_app
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+
+
 app = Flask(__name__)
 REQS = Counter('requests_total', 'Total requests')
 QUEUE = Gauge('fake_queue_length','simulated queue length')
