@@ -2,17 +2,18 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: autoscale-demo-sm
-  namespace: monitoring            # monitoring namespace
+  namespace: monitoring                     # monitoring namespace 
   labels:
-    release: kube-prometheus-stack #correct label for the operator
+    release: kube-prometheus-stack          # correct label for the operator  
 spec:
   selector:
     matchLabels:
       app: autoscale-demo
   namespaceSelector:
-    matchLabels:
-    - project1-autoscale-demo
+    matchNames:
+      - project1-autoscale-demo
   endpoints:
-  - port: http
-    path: /metrics
-    interval: 15s
+    - port: http
+      path: /metrics
+      interval: 15s
+
